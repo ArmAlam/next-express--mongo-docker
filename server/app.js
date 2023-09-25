@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", async (req, res) => {
-  return res.json({ message: "API is working✌️" });
+  return res.json({ message: "API is working!!✌️" });
 });
 
 app.get("/topics", async (req, res) => {
@@ -47,6 +47,7 @@ app.delete("/topic/:id", async (req, res) => {
 });
 
 const start = async () => {
+  const url = 'mongodb://172.17.0.1:27017/names';
   const { CONNECTION_STRING } = process.env;
   try {
     await mongoose.connect(CONNECTION_STRING);
