@@ -8,7 +8,7 @@
 
 4. Build server side image using the command - docker build -t <image_name> .
 
-5. Create a container using the command -> docker run --name <container_name> <image_name_from_step_3>
+5. Create a container using the command -> Create backend container, docker run --name <container_name> -v <project_path>:/app -v /app/node_modules -d --rm -p 3000:3000 --network <network_name> <image_name_from_step_4> /_ -v /app/node_modules is used to not get overwritten by host machine node_modules _/
 
 6. cd client
 

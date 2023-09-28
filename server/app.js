@@ -48,13 +48,20 @@ app.delete("/topic/:id", async (req, res) => {
 
 const start = async () => {
   // const url = 'mongodb://172.17.0.1:27017/names'; use 172.17.0.1 in stead of host.docker.internal in linux platfrom
-  const url = "mongodb://mongodb:27017/names"; // mongodb is the container name, when using network, docker will automatically resolve IP address
+  // mongodb is the container name, when using network, docker will automatically resolve IP address
+  // root:root is username:password,  set for auth while running docker container setup
+  const url = "mongodb://root:root@mongodb:27017/names?authSource=admin";
   // const { CONNECTION_STRING } = process.env;
   try {
-    await mongoose.connect(url);
-    app.listen(3000, () => console.log("Server started on port 3000"));
+    mongoose
+      .connect(url)
+      .then(() => {
+        console.log("mongodb connected");
+        app.listen(3000, () => console.log("Server started on port 3000"));
+      })
+      .catch((err) => console.log({ err }));
   } catch (error) {
-    console.error(error);
+    console.error({ error });
     process.exit(1);
   }
 };
