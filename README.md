@@ -2,7 +2,7 @@
 
 1. Clone the project
 
-2. Create mongodb container using the command -> docker run --name mongodb -d -p 27017:27017 mongo
+2. Create mongodb container using the command ->  docker run --name mongodb -v data:/data/db --rm -d --network names-net -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root  mongo
 
 3. cd to server
 

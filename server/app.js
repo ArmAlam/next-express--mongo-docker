@@ -47,10 +47,11 @@ app.delete("/topic/:id", async (req, res) => {
 });
 
 const start = async () => {
+  const { MONGODB_USERNAME, MONGODB_PASSWORD } = process.env;
   // const url = 'mongodb://172.17.0.1:27017/names'; use 172.17.0.1 in stead of host.docker.internal in linux platfrom
   // mongodb is the container name, when using network, docker will automatically resolve IP address
   // root:root is username:password,  set for auth while running docker container setup
-  const url = "mongodb://root:root@mongodb:27017/names?authSource=admin";
+  const url = `mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb:27017/names?authSource=admin`;
   // const { CONNECTION_STRING } = process.env;
   try {
     mongoose

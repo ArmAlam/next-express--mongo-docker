@@ -10,4 +10,7 @@ COPY . .
 
 EXPOSE 3000
 
+ENV MONGODB_USERNAME=root
+ENV MONGODB_PASSWORD=root
+
 CMD [ "npm", "run", "start" ]
