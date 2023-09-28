@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=root
+    #   - MONGO_INITDB_ROOT_PASSWORD=root
+    env_file:
+      - ./server/mongo.env
+      
+      
+  backend:
+    build: ./server
+    # build: 
+    #   context: ./server
+    #   dockerfile: Dockerfile
+    #   args:
+    #     some-arg: value
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./server:/app #bind mount, source code changes are instantly reflected
+      - /app/node_modules
+    env_file:
+      - ./server/.env
+
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./client
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./client/src:/app/src #bind mount, source code changes are instantly reflected
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+#named volumes should be listed here, anonymous and bind-mount volumes don't need to enlisted here
+volumes:
+  data:
