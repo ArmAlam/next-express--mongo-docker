@@ -5,6 +5,7 @@ services:
     image: 'mongo'
     volumes:
       - data:/data/db
+    container_name: mongodb
     # environment:
     #   - MONGO_INITDB_ROOT_USERNAME=root
     #   - MONGO_INITDB_ROOT_PASSWORD=root
@@ -24,6 +25,7 @@ services:
     volumes:
       - ./server:/app #bind mount, source code changes are instantly reflected
       - /app/node_modules
+    container_name: backend
     env_file:
       - ./server/.env
 
@@ -36,6 +38,7 @@ services:
       - '3001:3001'
     volumes:
       - ./client/src:/app/src #bind mount, source code changes are instantly reflected
+    container_name: frontend
     stdin_open: true
     tty: true
     depends_on:
