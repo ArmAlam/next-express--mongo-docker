@@ -18,6 +18,7 @@ export default function Home() {
       });
       const content = await rawResponse.json();
       getTopics();
+      setName("");
 
       console.log(content);
     } catch (error) {

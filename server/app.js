@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// TODO: SEPARATE ROUTE AND CONTROLLER
 app.get("/", async (req, res) => {
   return res.json({ message: "API is working!!✌️" });
 });
