@@ -1,5 +1,6 @@
 "use client";
 
+import { makeApiCall } from "@/utils/utils";
 import React, { useState, useEffect } from "react";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
 
   const handleSave = async () => {
     try {
-      const rawResponse = await fetch("http://localhost:3000/topic", {
+      const rawResponse = await makeApiCall("http://localhost:3000/topic", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -27,7 +28,7 @@ export default function Home() {
   };
 
   const getTopics = () => {
-    fetch("http://localhost:3000/topics")
+    makeApiCall("http://localhost:3000/topics")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -38,9 +39,12 @@ export default function Home() {
 
   const handleDelete = async (id: string) => {
     try {
-      const rawResponse = await fetch(`http://localhost:3000/topic/${id}`, {
-        method: "DELETE",
-      });
+      const rawResponse = await makeApiCall(
+        `http://localhost:3000/topic/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const content = await rawResponse.json();
 
       console.log(content);
