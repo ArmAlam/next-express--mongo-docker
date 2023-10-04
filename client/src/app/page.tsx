@@ -6,10 +6,11 @@ import React, { useState, useEffect } from "react";
 export default function Home() {
   const [names, setNames] = useState<{ _id: string; name: string }[]>([]);
   const [name, setName] = useState("");
+  const backendUrl = "http://localhost:3000";
 
   const handleSave = async () => {
     try {
-      const rawResponse = await makeApiCall("http://localhost:3000/topic", {
+      const rawResponse = await makeApiCall(`${backendUrl}/topic`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -28,10 +29,9 @@ export default function Home() {
   };
 
   const getTopics = () => {
-    makeApiCall("http://localhost:3000/topics")
+    makeApiCall(`${backendUrl}/topics`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setNames(data.topics);
       })
       .catch((err) => console.log({ err }));
@@ -39,12 +39,9 @@ export default function Home() {
 
   const handleDelete = async (id: string) => {
     try {
-      const rawResponse = await makeApiCall(
-        `http://localhost:3000/topic/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const rawResponse = await makeApiCall(`${backendUrl}/topic/${id}`, {
+        method: "DELETE",
+      });
       const content = await rawResponse.json();
 
       console.log(content);
