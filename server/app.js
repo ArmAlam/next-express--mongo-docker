@@ -1,8 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const Topic = require("./models/topic");
 const dotenv = require("dotenv");
+const {
+  getAllTopics,
+  getTopicById,
+  addTopic,
+  updateTopic,
+  deleteTopic,
+} = require("./src/TopicController");
 
 dotenv.config();
 
@@ -11,41 +17,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// TODO: SEPARATE ROUTE AND CONTROLLER
+// TODO: SEPARATE ROUTE
 app.get("/", async (req, res) => {
   return res.json({ message: "API is working!!✌️" });
 });
 
-app.get("/topics", async (req, res) => {
-  const topics = await Topic.find();
-  return res.status(200).send({ topics });
-});
+app.get("/topics", getAllTopics);
 
-app.get("/topic/:id", async (req, res) => {
-  const { id } = req.params;
-  const topic = await Topic.findById(id);
-  return res.status(200).send({ topic });
-});
+app.get("/topic/:id", getTopicById);
 
-app.post("/topic", async (req, res) => {
-  console.log(req.body);
-  const newTopic = new Topic({ ...req.body });
-  const insertedTopic = await newTopic.save();
-  return res.status(201).send({ insertedTopic });
-});
+app.post("/topic", addTopic);
 
-app.put("/topic/:id", async (req, res) => {
-  const { id } = req.params;
-  await Topic.updateOne({ id }, req.body);
-  const updatedTopic = await Topic.findById(id);
-  return res.status(200).send({ updatedTopic });
-});
+app.put("/topic/:id", updateTopic);
 
-app.delete("/topic/:id", async (req, res) => {
-  const { id } = req.params;
-  const deletedTopic = await Topic.findByIdAndDelete(id);
-  return res.status(200).send({ deletedTopic });
-});
+app.delete("/topic/:id", deleteTopic);
 
 const start = async () => {
   const { MONGODB_USERNAME, MONGODB_PASSWORD } = process.env;
