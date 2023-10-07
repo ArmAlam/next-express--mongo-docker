@@ -1,10 +1,11 @@
 "use client";
 
-import { makeApiCall } from "@/utils/utils";
 import React, { useState, useEffect } from "react";
+import { makeApiCall } from "@/utils/utils";
+import { IName } from "@/interfaces/interfaces";
 
-export default function Home() {
-  const [names, setNames] = useState<{ _id: string; name: string }[]>([]);
+const Home = () => {
+  const [names, setNames] = useState<IName[]>([]);
   const [name, setName] = useState("");
   const backendUrl = "http://localhost:3000";
 
@@ -94,4 +95,6 @@ export default function Home() {
       </form>
     </main>
   );
-}
+};
+
+export default Home;
